@@ -1,0 +1,8 @@
+# Ignore everything in this directory
+*
+# Except these files
+!.gitignore
+!reconhece_frente.py
+!reconhece_verso.py
+!apply_filter.py
+!reconhece_texto.py

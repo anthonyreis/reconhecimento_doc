@@ -2,50 +2,42 @@ import pytesseract
 from pytesseract.pytesseract import Output
 import cv2 as cv
 
-words = []
 
-# importing modules
+def reconhece_texto():
+    words = []
 
-# reading image using opencv
+    image = cv.imread('imgExpedicaoEqUnsharp.png')
 
-image = cv.imread('imgExpedicaoEqUnsharp.png')
+    # configuring parameters for tesseract
 
-#configuring parameters for tesseract
+    custom_config = r'--oem 3 --psm 6'
 
-custom_config = r'--oem 3 --psm 6'
+    pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract'
 
-# now feeding image to tesseract
+    #print(pytesseract.image_to_string(image=threshold_img, lang='por'))
 
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract'
+    details = pytesseract.image_to_data(
+        image, output_type=Output.DICT, config=custom_config, lang='por')
 
-#print(pytesseract.image_to_string(image=threshold_img, lang='por'))
+    print(details.keys())
+    print(details['text'])
+    print(details['conf'])
+    # print(pytesseract.image_to_string(r'C:\Users\User\Desktop\imagens_rg\frente\img16.png'))
 
-details = pytesseract.image_to_data(image, output_type=Output.DICT, config=custom_config, lang='por')
-
-print(details.keys())
-print(details['text'])
-print(details['conf'])
-#print(pytesseract.image_to_string(r'C:\Users\User\Desktop\imagens_rg\frente\img16.png'))
-
-total_boxes = len(details['text'])
-i = 0
-for sequence_number in range(total_boxes):
-    if int(int(float(details['conf'][sequence_number]))) > 50:
+    total_boxes = len(details['text'])
+    
+    for sequence_number in range(total_boxes):
+        if int(int(float(details['conf'][sequence_number]))) > 50:
             words.append(details['text'][sequence_number])
-            i += 1
-            (x, y, w, h) = (details['left'][sequence_number], details['top'][sequence_number], details['width'][sequence_number],  details['height'][sequence_number])
+           
+            (x, y, w, h) = (details['left'][sequence_number], details['top'][sequence_number],
+                            details['width'][sequence_number],  details['height'][sequence_number])
 
             gray_image = cv.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-# display image
+    cv.imshow('captured text', gray_image)
+    print(words)
 
-cv.imshow('captured text', gray_image)
-print(words)
+    cv.waitKey(0)
 
-# Maintain output window until user presses a key
-
-cv.waitKey(0)
-
-# Destroying present windows on screen
-
-cv.destroyAllWindows()
+    cv.destroyAllWindows()

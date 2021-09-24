@@ -1,14 +1,13 @@
-import cv2 as cv
 from PIL import Image, ImageFilter, ImageOps
 
-image = Image.open('imgExpedicao.png')
 
-gray_image = ImageOps.grayscale(image)
+def apply_filter(img_path):
+    image = Image.open(img_path)
 
-eq_img = ImageOps.equalize(gray_image, mask=None)
+    gray_image = ImageOps.grayscale(image)
 
-unsharp_img = eq_img.filter(ImageFilter.UnsharpMask(radius=3, percent=150))
+    eq_img = ImageOps.equalize(gray_image, mask=None)
 
-unsharp_img.save('imgExpedicaoEqUnsharp.png')
+    unsharp_img = eq_img.filter(ImageFilter.UnsharpMask(radius=3, percent=150))
 
-cv.waitKey(0)
+    unsharp_img.save('imgExpedicaoEqUnsharp.png')

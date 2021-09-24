@@ -1,43 +1,51 @@
 import pytesseract
 from pytesseract.pytesseract import Output
 import cv2 as cv
+import re
+import os
 
 
-def reconhece_texto():
-    words = []
+def reconhece_texto(name):
+    words = ''
+    date_params = ['Nascimento', 'Expedicao']
+    allData = {}
 
-    image = cv.imread('imgExpedicaoEqUnsharp.png')
+    file_names = [f'imgAssinatura{name}Filter', f'imgGoverno{name}Filter', f'imgRegistro{name}', f'imgNome{name}Filter',
+                  f'imgFiliacao{name}Filter', f'imgNaturalidade{name}Filter', f'imgCpf{name}Filter', f'imgNascimento{name}', f'imgExpedicao{name}']
 
-    # configuring parameters for tesseract
+    for file in file_names:
+        image = cv.imread(f'{file}.png')
 
-    custom_config = r'--oem 3 --psm 6'
+        # configuring parameters for tesseract
 
-    pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract'
+        custom_config = r'--oem 3 --psm 7'
 
-    #print(pytesseract.image_to_string(image=threshold_img, lang='por'))
+        pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract'
 
-    details = pytesseract.image_to_data(
-        image, output_type=Output.DICT, config=custom_config, lang='por')
+        #print(pytesseract.image_to_string(image=threshold_img, lang='por'))
 
-    print(details.keys())
-    print(details['text'])
-    print(details['conf'])
-    # print(pytesseract.image_to_string(r'C:\Users\User\Desktop\imagens_rg\frente\img16.png'))
+        details = pytesseract.image_to_data(
+            image, output_type=Output.DICT, config=custom_config, lang='por')
 
-    total_boxes = len(details['text'])
+        # print(pytesseract.image_to_string(r'C:\Users\User\Desktop\imagens_rg\frente\img16.png'))
+
+        total_boxes = len(details['text'])
+
+        for sequence_number in range(total_boxes):
+            if int(int(float(details['conf'][sequence_number]))) > 50:
+                words += details['text'][sequence_number] + ' '
+
+        field_name = re.split('\d', file)[0][3:]
+        
+        if field_name in date_params:
+            words = re.sub('[^\d/]', '', words)
+
+        elif field_name == 'Registro':
+            words = re.sub('[^\d\w\.\-]', '', words)
+            
+        allData[field_name] = words
+        words = ''
+        
+        os.remove(f'{file}.png')
     
-    for sequence_number in range(total_boxes):
-        if int(int(float(details['conf'][sequence_number]))) > 50:
-            words.append(details['text'][sequence_number])
-           
-            (x, y, w, h) = (details['left'][sequence_number], details['top'][sequence_number],
-                            details['width'][sequence_number],  details['height'][sequence_number])
-
-            gray_image = cv.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-
-    cv.imshow('captured text', gray_image)
-    print(words)
-
-    cv.waitKey(0)
-
-    cv.destroyAllWindows()
+    print(allData)   

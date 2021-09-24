@@ -12,7 +12,6 @@ def reconhece_verso(doc_path, name):
     pos_inicial_registro = width * 0.135
     pos_final_registro = width * 0.513
 
-    #cv.rectangle(imgVerso, (int(pos_inicial_registro), int(tam_registro_inicial)), (int(pos_final_registro), int(tam_registro_final)), (255, 0, 0), 2)
     cv.imwrite(f'imgRegistro{name}.png', imgVerso[int(tam_registro_inicial):int(
         tam_registro_final), int(pos_inicial_registro):int(pos_final_registro)])
 
@@ -21,7 +20,6 @@ def reconhece_verso(doc_path, name):
     pos_inicial_nome = width * 0.04
     pos_final_nome = width * 0.795
 
-    #cv.rectangle(imgVerso, (int(pos_inicial_nome), int(tam_nome_inicial)), (int(pos_final_nome), int(tam_nome_final)), (255, 0, 0), 2)
     cv.imwrite(f'imgNome{name}.png', imgVerso[int(tam_nome_inicial):int(
         tam_nome_final), int(pos_inicial_nome):int(pos_final_nome)])
 
@@ -30,7 +28,6 @@ def reconhece_verso(doc_path, name):
     pos_inicial_filiacao = width * 0.04
     pos_final_filiacao = width
 
-    #cv.rectangle(imgVerso, (int(pos_inicial_filiacao), int(tam_filiacao_inicial)), (int(pos_final_filiacao), int(tam_filiacao_final)), (255, 0, 0), 2)
     cv.imwrite(f'imgFiliacao{name}.png', imgVerso[int(tam_filiacao_inicial):int(
         tam_filiacao_final), int(pos_inicial_filiacao):int(pos_final_filiacao)])
 
@@ -39,7 +36,6 @@ def reconhece_verso(doc_path, name):
     pos_inicial_naturalidade = width * 0.04
     pos_final_naturalidade = width * 0.536
 
-    #cv.rectangle(imgVerso, (int(pos_inicial_naturalidade), int(tam_naturalidade_inicial)), (int(pos_final_naturalidade), int(tam_naturalidade_final)), (255, 0, 0), 2)
     cv.imwrite(f'imgNaturalidade{name}.png', imgVerso[int(tam_naturalidade_inicial):int(
         tam_naturalidade_final), int(pos_inicial_naturalidade):int(pos_final_naturalidade)])
 
@@ -48,7 +44,6 @@ def reconhece_verso(doc_path, name):
     pos_inicial_cpf = width * 0.04
     pos_final_cpf = width * 0.497
 
-    #cv.rectangle(imgVerso, (int(pos_inicial_cpf), int(tam_cpf_inicial)), (int(pos_final_cpf), int(tam_cpf_final)), (255, 0, 0), 2)
     cv.imwrite(f'imgCpf{name}.png', imgVerso[int(tam_cpf_inicial):int(
         tam_cpf_final), int(pos_inicial_cpf):int(pos_final_cpf)])
 
@@ -57,7 +52,6 @@ def reconhece_verso(doc_path, name):
     pos_inicial_nascimento = width * 0.61
     pos_final_nascimento = width
 
-    #cv.rectangle(imgVerso, (int(pos_inicial_nascimento), int(tam_nascimento_inicial)), (int(pos_final_nascimento), int(tam_nascimento_final)), (255, 0, 0), 2)
     cv.imwrite(f'imgNascimento{name}.png', imgVerso[int(tam_nascimento_inicial):int(
         tam_nascimento_final), int(pos_inicial_nascimento):int(pos_final_nascimento)])
 
@@ -66,6 +60,5 @@ def reconhece_verso(doc_path, name):
     pos_inicial_expedicao = width * 0.53
     pos_final_expedicao = width
 
-    #cv.rectangle(imgVerso, (int(pos_inicial_expedicao), int(tam_expedicao_inicial)), (int(pos_final_expedicao), int(tam_expedicao_final)), (255, 0, 0), 2)
     cv.imwrite(f'imgExpedicao{name}.png', imgVerso[int(tam_expedicao_inicial):int(
         tam_expedicao_final), int(pos_inicial_expedicao):int(pos_final_expedicao)])

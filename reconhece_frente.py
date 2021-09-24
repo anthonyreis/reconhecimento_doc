@@ -12,7 +12,6 @@ def reconhece_frente(doc_path, name):
     lateral_esquerda_governo = width * 0.27
     lateral_direita_governo = (width * 0.27) + (width * 0.6)
 
-    #cv.rectangle(imgFrente, (int(lateral_esquerda_governo), int(tam_governo_inicial)), (int(lateral_direita_governo), int(tam_governo_final)), (255, 0, 0), 2)
     cv.imwrite(f'imgGoverno{name}.png', imgFrente[int(tam_governo_inicial):int(
         tam_governo_final), int(lateral_esquerda_governo):int(lateral_direita_governo)])
 
@@ -21,7 +20,6 @@ def reconhece_frente(doc_path, name):
     tam_foto_inicial = width * 0.5
     tam_foto_final = (width * 0.5) + (width * 0.4)
 
-    #cv.rectangle(imgFrente, (int(tam_foto_inicial), int(tam_centro_inicio)), (int(tam_foto_final), int(tam_centro_final)), (255, 0, 0), 2)
     cv.imwrite(f'imgFoto{name}.png', imgFrente[int(tam_centro_inicio):int(
         tam_centro_final), int(tam_foto_inicial):int(tam_foto_final)])
 
